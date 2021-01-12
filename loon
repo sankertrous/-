@@ -1,0 +1,161 @@
+#自制规则，自用，出现的所有问题一律不负责
+#Update Date: 2077-01-032 15:76:188
+#仅供支持: Loon
+
+[General]
+# IPv6 支持
+ipv6 = false
+# > 跳过某个域名或者IP段
+skip-proxy = 192.168.0.0/16,10.0.0.0/8,172.16.0.0/12,localhost,*.local,e.crashlynatics.com
+bypass-tun = 10.0.0.0/8,100.64.0.0/10,127.0.0.0/8,169.254.0.0/16,172.16.0.0/12,192.0.0.0/24,192.0.2.0/24,192.88.99.0/24,192.168.0.0/16,198.18.0.0/15,198.51.100.0/24,203.0.113.0/24,224.0.0.0/4,255.255.255.255/32
+# DNS 服务器
+dns-server = system,119.29.29.29
+# Wi-Fi 访问
+# > 允许 Wi-Fi 网络下其它设备访问
+allow-udp-proxy = false
+allow-wifi-access = false
+wifi-access-http-port = 7222
+wifi-access-socket5-port = 7221
+# > 代理测速 URL
+proxy-test-url = http://www.gstatic.com/generate_204
+# > 测速超时 (s)
+test-timeout = 3
+# 解析器
+resource-parser = https://raw.githubusercontent.com/Peng-YM/Sub-Store/master/scripts/sub-store-parser.js
+
+[Host]
+
+
+[Proxy]
+# 本地节点
+# 内置 DIRECT、REJECT 策略
+# 节点名称 = 协议, 服务器地址, 服务器端口, 加密协议, 密码, 
+# vmess
+# 节点名称 = 协议, 服务器地址, 端口, 加密方式, UUID, 传输方式:(tcp/ws),path：websocket握手header中的path, host：websocket握手header中的path, over-tls:是否tls, tls-name：远端w服务器域名, skip-cert-verify：是否跳过证书校验（默认否）
+#5 = vmess, 1.2.3.4, 10086, aes-128-gcm,”uuid“,transport:ws,path:/,host:icloud.com,over-tls:true,tls-name:youtTlsServerName.com,skip-cert-verify:false
+
+
+[Remote Proxy]
+# 订阅节点
+# 别名 = 订阅URL
+网易解锁 = https://git.io/JfNq3, parser-enable = true
+
+
+[Remote Filter]
+# 筛选订阅节点, 筛选后的结果可加入到策略组中, 目前支持三种筛选方式
+# NodeSelect: 使用在UI上选择的节点。
+# NameKeyword: 根据提供的关键词对订阅中所有节点的名称进行筛选, 使用筛选后的节点。
+# NameRegex: 根据提供的正则表达式对订阅中所有节点的名称进行筛选, 使用筛选后的节点。
+
+机场节点 = NameRegex, FilterKey = "(.*)"
+香港 = NameRegex, FilterKey = "(?i)(港|HK|Hong)"
+台湾 = NameRegex, FilterKey = "(?i)(台|TW|Tai)"
+日本 = NameRegex, FilterKey = "(?i)(日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)"
+韩国 = NameRegex, FilterKey = "(?i)(KR|Korea|KOR|首尔|韩|韓)"
+美国 = NameRegex, FilterKey = "(?i)(美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|US|United States)"
+新加坡 = NameRegex, FilterKey = "(?i)(新加坡|坡|狮城|SG|Singapore)"
+IPLC = NameRegex, FilterKey = "(?i)(IPEL|IPLC|中继)"
+Netflix = NameRegex, FilterKey = "(?i)(Netflix)"
+网易解锁 = NameRegex, FilterKey = "(?i)(unblock|music|Music|云音乐|🎧)"
+[Proxy Group]
+FINAL = select,DIRECT,节点选择
+
+# 策略组
+节点选择 = select,香港节点,美国节点,日本节点,台湾节点
+苹果服务 = select,DIRECT,节点选择
+网易音乐 = select,DIRECT,解锁节点
+奈飞视频 = select,节点选择,奈飞
+油管视频 = select,节点选择,香港节点,日本节点,美国节点 
+巴哈姆特 = select,节点选择,台湾节点,香港节点 
+电报消息 = select,节点选择,香港节点,狮城节点,美国节点 
+国外媒体 = select,节点选择,狮城节点,香港节点,台湾节点,韩国节点,美国节点 
+港台番剧 = select,DIRECT,台湾节点,香港节点
+
+香港节点 = select,香港
+台湾节点 = select,台湾
+狮城节点 = select,新加坡
+韩国节点 = select,韩国
+日本节点 = select,日本
+美国节点 = select,美国
+流量节点 = select,IPLC
+奈飞 = select,Netflix
+解锁节点 = select,网易解锁
+
+# SSID
+# 别名 = ssid, 默认 = 策略,  蜂窝 = 策略,  ssid名称 = 策略
+#SSID = ssid, default = PROXY, cellular = DIRECT, ”DivineEngine“ = PROXY
+
+
+[Rule]
+#自己在DIRECT前面添加需要直连但是规则走了代理的域名
+DOMAIN, rsshub.app, 节点选择
+
+GEOIP,CN,diyibanzhu3.in,diyibanzhu2.in,diyibanzhu1.in,DIRECT
+FINAL,FINAL
+
+[Remote Rule]
+# Remote Rule
+# 订阅规则URL,策略
+# PROXY
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Advertising.list,REJECT, policy=REJECT, tag=去广告,enabled=true
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Hijacking.list,REJECT, policy=REJECT, tag=去广告,enabled=true
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Privacy.list,REJECT, policy=REJECT, tag=去广告,enabled=true
+https://cdn.jsdelivr.net/gh/GeQ1an/Rules@master/QuantumultX/Filter/AdBlock.list, REJECT, policy=REJECT, tag=去广告,enabled=true
+
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/TestFlight/TestFlight.list, policy=节点选择, tag=TestFlight, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Apple/Apple.list, policy=苹果服务, tag=苹果服务, enabled=true
+
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/YouTube/YouTube.list, policy=油管视频, tag=油管视频, enabled=true
+
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Netflix/Netflix.list, policy=奈飞视频, tag=奈飞视频, enabled=true
+
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Bahamut/Bahamut.list, policy=巴哈姆特, tag=巴哈姆特, enabled=true
+
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/GlobalMedia/GlobalMedia.list, policy=节点选择, tag=国外媒体, enabled=true
+
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Bilibili/Bilibili.list, policy=港台番剧, tag=国内媒体, enabled=true
+
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Telegram/Telegram.list, policy=电报消息, tag=电报消息, enabled=true
+
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Proxy/Proxy.list, policy=节点选择, tag=全球规则, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Proxy/Proxy_Domain.list, policy=节点选择, tag=全球规则,enabled=true
+
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/China/China.list, policy=DIRECT, tag=全球直连, enabled=true
+
+[URL Rewrite]
+enable = true
+# Redirect Google Search Service
+^https?:\/\/(www.)?(g|google)\.cn https://www.google.com 302
+(?<=_region=)CN(?=&) JP 307
+(?<=&app_version=)17..(?=.?.?&) 1 307
+(?<=\?version_code=)17..(?=.?.?&) 1 307
+(.*video_id=\w{32})(.*watermark=)(.*) $1 302
+
+[Remote Rewrite]
+# 订阅 URL Rewrite
+# 订阅url,别名(可选)
+https://raw.githubusercontent.com/ssooenftzero/0X/master/Loon/conf/loonnowshremoterewrite.conf, tag=官方复写好奇整合, enable=true
+https://raw.githubusercontent.com/ConnersHua/Profiles/master/Quantumult/X/Rewrite.conf, tag=神机复写, enable=true
+
+[Remote Script]
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Script.conf, tag=Script, enabled=false
+
+[Plugin]
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Plugin/Host.plugin, tag=Host, enabled=true
+
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Plugin/Block/Advertising.plugin, proxy=REJECT, tag=Advertising, enabled=true
+
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Plugin/General.plugin, tag=General, enabled=true
+
+https://gitee.com/chavyleung/scripts/raw/master/box/rewrite/boxjs.rewrite.loon.tf.plugin, tag=Boxjs, enabled=true
+
+https://raw.githubusercontent.com/Peng-YM/Sub-Store/master/config/Loon.plugin, tag=订阅解析器, enabled=true
+
+https://raw.githubusercontent.com/Tartarus2014/Loon-Script/master/Plugin/Netease%20Music.plugin, proxy=网易音乐, tag=网易音乐, enabled=true
+
+[MITM]
+hostname = *.example.com,*.sample.com, *.musical.ly, *.tiktokv.com, *.byteoversea.com, *.snssdk.com
+enable = true
+skip-server-cert-verify = true
+#ca-p12 =
+#ca-passphrase =
