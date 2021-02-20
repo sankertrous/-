@@ -2,6 +2,8 @@
 
 QX-
 更新加入q-search。具体用法看https://raw.githubusercontent.com/myouhi/QuantumultX/master/Q-Search_All_in_one.conf
+（偷的）
+
 自己diy适用的分组，不符合使用情况请自行改
 
 
