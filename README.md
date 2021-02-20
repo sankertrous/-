@@ -1,8 +1,14 @@
 #配置相关
 
+QX-
+更新加入q-search。具体用法看https://raw.githubusercontent.com/myouhi/QuantumultX/master/Q-Search_All_in_one.conf
+自己diy适用的分组，不符合使用情况请自行改
+
 
  loon-
 更新时间：不一定什么时候就更新。
+
+2021-02-20依然没更新
 
 期望值：别抱希望。
 
