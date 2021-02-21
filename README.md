@@ -14,6 +14,8 @@ QX-
 
 LOON-
 
+使用方法：配置下载：https://raw.githubusercontent.com/sankertrous/-/main/loon.conf
+
 更新时间：不一定什么时候就更新。
 
 同样加入q-search，使用方法上方
