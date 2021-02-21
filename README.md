@@ -1,6 +1,7 @@
 #配置相关
 
 QX-
+
 使用方法：配置处点下载，输入https://raw.githubusercontent.com/sankertrous/-/main/qx.conf
 
 更新加入q-search。具体用法看https://raw.githubusercontent.com/myouhi/QuantumultX/master/Q-Search_All_in_one.conf
@@ -12,6 +13,7 @@ QX-
 
 
 LOON-
+
 更新时间：不一定什么时候就更新。
 
 同样加入q-search，使用方法上方
